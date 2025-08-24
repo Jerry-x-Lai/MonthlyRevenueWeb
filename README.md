@@ -2,7 +2,7 @@
 # MonthlyRevenueWeb
 
 ## 技術棧
-- Vue 3 (Composition API, `<script setup>`)
+- Vue 3 (Composition API)
 - Vite
 - TypeScript
 - Pinia (狀態管理)
@@ -29,5 +29,3 @@ pnpm run dev
 ## UI 框架
 - 全站採用 Element Plus，表格、按鈕、下拉、提示等皆已美化
 
-## 版控
-請將專案 push 至 https://github.com/Jerry-x-Lai/MonthlyRevenueWeb.git
