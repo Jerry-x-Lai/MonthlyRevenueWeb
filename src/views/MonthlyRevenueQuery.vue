@@ -4,6 +4,7 @@
     <template #header>
       <div class="header-row">
         <span>每月營收查詢</span>
+        <el-input v-model="inputCompanyId" placeholder="公司代號" style="width: 140px; margin-right: 8px;" clearable />
         <el-button type="primary" @click="fetchData" :loading="isLoading">查詢</el-button>
       </div>
     </template>
@@ -47,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useMonthlyRevenueStore } from '../stores/monthlyRevenue'
 import { storeToRefs } from 'pinia'
 import { ElCard, ElButton, ElTable, ElTableColumn, ElAlert, ElEmpty, ElSkeleton, ElSelect, ElOption, ElTag } from 'element-plus'
@@ -55,6 +56,7 @@ import { ElCard, ElButton, ElTable, ElTableColumn, ElAlert, ElEmpty, ElSkeleton,
 const store = useMonthlyRevenueStore()
 const { data, isLoading, error } = storeToRefs(store)
 
+const inputCompanyId = ref<string>('')
 const selectedCompany = ref<string | null>(null)
 
 const companyOptions = computed(() => {
@@ -80,9 +82,13 @@ const sumLastMonthRevenue = computed(() => {
   return filteredData.value.reduce((sum, item) => sum + (item.lastMonthRevenue || 0), 0)
 })
 
-function fetchData() {
-  store.fetchMonthlyRevenue()
+const fetchData = () => {
+  store.fetchMonthlyRevenue(inputCompanyId.value)
 }
+
+onMounted(() => {
+  fetchData()
+})
 </script>
 
 table {

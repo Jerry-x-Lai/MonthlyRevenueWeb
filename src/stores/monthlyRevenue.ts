@@ -31,12 +31,15 @@ export const useMonthlyRevenueStore = defineStore('monthlyRevenue', {
         error: null
     }),
     actions: {
-        async fetchMonthlyRevenue() {
+        async fetchMonthlyRevenue(companyId?: string) {
             this.isLoading = true
             this.error = null
             try {
-              const res = await api.get('/api/MonthlyRevenue')
-                console.log("res", res);
+                let url = '/api/MonthlyRevenue'
+                if (companyId) {
+                    url += `?companyId=${encodeURIComponent(companyId)}`
+                }
+                const res = await api.get(url)
                 if (res.data.isSuccess) {
                     this.data = res.data.data
                 } else {
